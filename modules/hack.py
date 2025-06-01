@@ -2,9 +2,9 @@ import asyncio
 from bleak import BleakClient
 from crccheck.crc import Crc8Maxim
 from bleak import BleakScanner
+import streamlit as st
 
-address = "DA:2E:1C:E1:05:23"
-model = "cba20002-224d-11e6-9fb8-0002a5d5c51b"
+
 
 # async def main(address):
 #     device = await BleakScanner.find_device_by_name("WoCurtain")
@@ -35,7 +35,7 @@ async def dos():
     close = bytes.fromhex("570f450101010000")
     open = bytes.fromhex("570f45010101ff00")
 
-    await executeLooped(address, model, [open, close])
+    await executeLooped(model, [open, close])
 
 async def infinite():
     start = bytes.fromhex("570f450406010101")
@@ -45,34 +45,60 @@ async def infinite():
     gaan = bytes.fromhex("570f4505040001")
     stop = bytes.fromhex("570f45050500")
 
-    await execute(address, model, [start, iets, anders, ltr, gaan, stop])
+    await execute(model, [start, iets, anders, ltr, gaan, stop])
 
 async def clear():
     clear = bytes.fromhex("570f450303")
 
-    await execute(address, model, clear)
+    await execute(model, clear)
     
 async def open():
     open = bytes.fromhex("570f45010101ff00")
 
-    await execute(address, model, open)
+    await execute(model, open)
 
 async def close():
     close = bytes.fromhex("570f450101010000")
 
-    await execute(address, model, close)
+    await execute(model, close)
 
-async def execute(address, model, toExecute):
+async def execute(model, toExecute):
+    address = st.session_state.df.loc[st.session_state.address.selection.rows[0]]
     async with BleakClient(address) as client:
         for command in toExecute():
             await client.write_gatt_char(model, command)
 
-async def executeLooped(address, model, toExecute):
+async def executeLooped(model, toExecute):
+    address = st.session_state.df.loc[st.session_state.address.selection.rows[0]]
     async with BleakClient(address) as client:
         for i in range(1000):
             for command in toExecute():
                 await client.write_gatt_char(model, command)
 
+def hack(function):
+    # address = "DA:2E:1C:E1:05:23"
+    if ("address" not in st.session_state):
+        st.write("No object selected yet")
+    else:
+        st.write("Object selected!")
+    global model 
+    model = "cba20002-224d-11e6-9fb8-0002a5d5c51b"
+
+    loop = asyncio.get_event_loop()
+    try:
+        match function:
+            case "Clear":
+                loop.run_until_complete(clear())
+            case "Open":
+                loop.run_until_complete(open())
+            case "Close":
+                loop.run_until_complete(close())
+            case "DOS":
+                loop.run_until_complete(dos())
+            case "Infinite":
+                loop.run_until_complete(infinite())
+    except Exception as e:
+        print(e)
 
 # asyncio.run(main(address))
 

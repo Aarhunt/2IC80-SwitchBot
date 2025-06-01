@@ -2,13 +2,13 @@ import streamlit as st
 import nest_asyncio
 import modules
 
-nest_asyncio.apply()
 
 st.set_page_config(
     page_title="Hello",
     page_icon="👋",
     layout="wide",
 )
+nest_asyncio.apply()
 st.markdown("""
             ## Home
             Homepage!
@@ -16,19 +16,19 @@ st.markdown("""
 
 col1, col2 = st.columns(2);
 
-def hack():
+def hackPanel():
     st.markdown("""
             ## Hack
             By pressing the following buttons, you can hack the selected Switchbot
             """)
     leftB, rightB = st.columns(2);
     with leftB:
-        st.button("Open")
+        st.button("Open", on_click=modules.hack("Open"))
     with rightB:
-        st.button("Close")
-    st.button("DOS")
-    st.button("Remove lighting rules")
-    st.button("Move indefinitely")
+        st.button("Close", on_click=modules.hack("Close"))
+    st.button("DOS", on_click=modules.hack("DOS"))
+    st.button("Remove lighting rules", on_click=modules.hack("Clear"))
+    st.button("Move indefinitely", on_click=modules.hack("Infinite"))
 
 def info():
    st.markdown("""
@@ -45,5 +45,5 @@ with col1:
     scan()
 
 with col2:
-    hack()
+    hackPanel()
     info()

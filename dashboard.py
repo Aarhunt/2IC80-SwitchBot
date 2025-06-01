@@ -9,10 +9,6 @@ st.set_page_config(
     layout="wide",
 )
 nest_asyncio.apply()
-st.markdown("""
-            ## Home
-            Homepage!
-            """)
 
 col1, col2 = st.columns(2);
 
@@ -23,12 +19,12 @@ def hackPanel():
             """)
     leftB, rightB = st.columns(2);
     with leftB:
-        st.button("Open", on_click=modules.hack("Open"))
+        st.button("Open", on_click=modules.hack, args=("Open",))
     with rightB:
-        st.button("Close", on_click=modules.hack("Close"))
-    st.button("DOS", on_click=modules.hack("DOS"))
-    st.button("Remove lighting rules", on_click=modules.hack("Clear"))
-    st.button("Move indefinitely", on_click=modules.hack("Infinite"))
+        st.button("Close", on_click=modules.hack, args=("Close",))
+    st.button("DOS", on_click=modules.hack, args=("DOS",))
+    st.button("Remove lighting rules", on_click=modules.hack, args=("Clear",))
+    st.button("Move indefinitely", on_click=modules.hack, args=("Infinite",))
 
 def info():
    st.markdown("""

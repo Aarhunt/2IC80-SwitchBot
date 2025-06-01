@@ -77,10 +77,9 @@ async def executeLooped(model, toExecute):
 
 def hack(function):
     # address = "DA:2E:1C:E1:05:23"
-    if ("address" not in st.session_state):
-        st.write("No object selected yet")
-    else:
-        st.write("Object selected!")
+    if (("address" not in st.session_state) or (len(st.session_state.address.selection.rows)) == 0):
+        st.error("No object selected!")
+        return
     global model 
     model = "cba20002-224d-11e6-9fb8-0002a5d5c51b"
 
@@ -97,6 +96,8 @@ def hack(function):
                 loop.run_until_complete(dos())
             case "Infinite":
                 loop.run_until_complete(infinite())
+            case _:
+                st.write("AAAAAAA")
     except Exception as e:
         print(e)
 

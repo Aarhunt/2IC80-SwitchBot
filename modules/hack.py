@@ -1,7 +1,5 @@
 import asyncio
 from bleak import BleakClient
-from crccheck.crc import Crc8Maxim
-from bleak import BleakScanner
 import streamlit as st
 
 
@@ -43,36 +41,44 @@ async def infinite():
     anders = bytes.fromhex("570f450501")
     ltr = bytes.fromhex("570f450508010101")
     gaan = bytes.fromhex("570f4505040001")
+
+    await execute(model, [start, iets, anders, ltr, gaan])
+
+async def stopInfinite():
     stop = bytes.fromhex("570f45050500")
 
-    await execute(model, [start, iets, anders, ltr, gaan, stop])
+    await execute(model, [stop])
+
 
 async def clear():
     clear = bytes.fromhex("570f450303")
 
-    await execute(model, clear)
+    await execute(model, [clear])
     
 async def open():
     open = bytes.fromhex("570f45010101ff00")
 
-    await execute(model, open)
+    await execute(model, [open])
 
 async def close():
     close = bytes.fromhex("570f450101010000")
 
-    await execute(model, close)
+    await execute(model, [close])
 
 async def execute(model, toExecute):
-    address = st.session_state.df.loc[st.session_state.address.selection.rows[0]]
+    address = st.session_state.df.loc[st.session_state.address.selection.rows[0], "address"]
+    print(address)
     async with BleakClient(address) as client:
-        for command in toExecute():
+        for command in toExecute:
+            print(model)
+            print(command)
             await client.write_gatt_char(model, command)
 
 async def executeLooped(model, toExecute):
     address = st.session_state.df.loc[st.session_state.address.selection.rows[0]]
     async with BleakClient(address) as client:
         for i in range(1000):
-            for command in toExecute():
+            for command in toExecute:
                 await client.write_gatt_char(model, command)
 
 def hack(function):
@@ -96,6 +102,8 @@ def hack(function):
                 loop.run_until_complete(dos())
             case "Infinite":
                 loop.run_until_complete(infinite())
+            case "stopInfinite":
+                loop.run_until_complete(stopInfinite())
             case _:
                 st.write("AAAAAAA")
     except Exception as e:

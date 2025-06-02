@@ -17,14 +17,18 @@ def hackPanel():
             ## Hack
             By pressing the following buttons, you can hack the selected Switchbot
             """)
-    leftB, rightB = st.columns(2);
-    with leftB:
+    open, close = st.columns(2);
+    with open:
         st.button("Open", on_click=modules.hack, args=("Open",))
-    with rightB:
+    with close:
         st.button("Close", on_click=modules.hack, args=("Close",))
     st.button("DOS", on_click=modules.hack, args=("DOS",))
     st.button("Remove lighting rules", on_click=modules.hack, args=("Clear",))
-    st.button("Move indefinitely", on_click=modules.hack, args=("Infinite",))
+    start, stop = st.columns(2);
+    with start:
+        st.button("Move indefinitely", on_click=modules.hack, args=("Infinite",))
+    with stop:
+        st.button("Stop moving", on_click=modules.hack, args=("stopInfinite",))
 
 def info():
    st.markdown("""

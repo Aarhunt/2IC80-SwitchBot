@@ -17,7 +17,9 @@ def hackPanel():
             ## Hack
             By pressing the following buttons, you can hack the selected Switchbot
             """)
-    open, close = st.columns(2);
+    openTooFar, open, close = st.columns(3);
+    with openTooFar:
+        st.button("Open too far", on_click=modules.hack, args=("OpenTooFar",))
     with open:
         st.button("Open", on_click=modules.hack, args=("Open",))
     with close:

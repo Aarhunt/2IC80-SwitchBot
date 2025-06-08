@@ -56,6 +56,11 @@ async def clear():
     await execute(model, [clear])
     
 async def open():
+    open = bytes.fromhex("570f450101016400")
+
+    await execute(model, [open])
+
+async def openTooFar():
     open = bytes.fromhex("570f45010101ff00")
 
     await execute(model, [open])
@@ -96,6 +101,8 @@ def hack(function):
                 loop.run_until_complete(clear())
             case "Open":
                 loop.run_until_complete(open())
+            case "OpenTooFar":
+                loop.run_until_complete(openTooFar())
             case "Close":
                 loop.run_until_complete(close())
             case "DOS":

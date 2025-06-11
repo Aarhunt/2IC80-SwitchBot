@@ -80,11 +80,12 @@ async def execute(model, toExecute):
             await client.write_gatt_char(model, command)
 
 async def executeLooped(model, toExecute):
-    address = st.session_state.df.loc[st.session_state.address.selection.rows[0]]
-    async with BleakClient(address) as client:
-        for i in range(1000):
-            for command in toExecute:
-                await client.write_gatt_char(model, command)
+    with st.spinner("Wait for it...", show_time=True):
+        address = st.session_state.df.loc[st.session_state.address.selection.rows[0]]
+        async with BleakClient(address) as client:
+            for i in range(1000):
+                for command in toExecute:
+                    await client.write_gatt_char(model, command)
 
 def hack(function):
     # address = "DA:2E:1C:E1:05:23"

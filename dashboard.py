@@ -19,16 +19,22 @@ def hackPanel():
             """)
     open, close = st.columns(2);
     with open:
-        st.button("Open", on_click=modules.hack, args=("Open",))
+        st.button("Open", on_click=modules.open)
     with close:
-        st.button("Close", on_click=modules.hack, args=("Close",))
-    st.button("DOS", on_click=modules.hack, args=("DOS",))
-    st.button("Remove lighting rules", on_click=modules.hack, args=("Clear",))
+        st.button("Close", on_click=modules.close)
+    st.button("DOS", on_click=modules.dos)
+    st.button("Remove lighting rules", on_click=modules.clear)
     start, stop = st.columns(2);
     with start:
-        st.button("Move indefinitely", on_click=modules.hack, args=("Infinite",))
+        st.button("Move indefinitely", on_click=modules.infinite())
     with stop:
-        st.button("Stop moving", on_click=modules.hack, args=("stopInfinite",))
+        st.button("Stop moving", on_click=modules.stopInfinite())
+    st.button("Brick", on_click=modules.brick)
+    silent, normal = st.columns(2);
+    with silent:
+        st.button("Silent mode", on_click=modules.silent())
+    with normal:
+        st.button("Normal mode", on_click=modules.normal())
 
 def info():
    st.markdown("""

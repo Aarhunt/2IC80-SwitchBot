@@ -10,14 +10,15 @@ st.set_page_config(
 )
 nest_asyncio.apply()
 
-col1, col2 = st.columns([2, 2]);
+col1, col2 = st.columns([2, 2])
+
 
 def hackPanel():
     st.markdown("""
             ## Hack
             By pressing the following buttons, you can hack the selected Switchbot
             """)
-    opening, moving, others = st.columns([1,1,1], gap="small", border=True);
+    opening, moving, others = st.columns([1, 1, 1], gap="small", border=True)
     with opening:
         st.markdown("""
                    ##### Opening & Closing
@@ -42,15 +43,18 @@ def hackPanel():
 
 
 def info():
-   st.markdown("""
+    st.markdown("""
             ## Info
             """)
+    modules.info()
+
 
 def scan():
     st.markdown("""
             ## Scan
             """)
     st.button("Scan", on_click=modules.scan())
+
 
 with col1:
     scan()

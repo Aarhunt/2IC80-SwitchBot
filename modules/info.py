@@ -31,7 +31,7 @@ def interpret(data):
     # st.session_state.nc = bytestring[10:16]
     # st.session_state.update_utc_flag = bytestring[16]
     shared_data["battery"] = int(bytestring[17:24], 2)
-    shared_data["moving"] = bytestring[24]
+    shared_data["moving"] = int(bytestring[24])
     shared_data["position"] = int(bytestring[25:32], 2)
     shared_data["light_level"] = int(bytestring[32:37], 2)
     # st.session_state.device_chain = bytestring[37:]
@@ -51,19 +51,19 @@ def interpret(data):
 
 
 def detection_callback(device, advertisement_data):
-    print("callback")
+    # print("callback")
     advertisement_data = advertisement_data["props"]
-    print(f"device address: {device.address.upper()}")
-    print(f"\n📡 Found target device: {device.name} [{device.address}]")
-    print(f"RSSI: {device.rssi}")
-    print("🔍 Advertisement Data:")
-    # print(f"  Local Name: {advertisement_data.local_name}")
-    print(f"  Manufacturer Data: {advertisement_data['ManufacturerData']}")
-    print(f"  Service UUIDs: {advertisement_data['UUIDs']}")
-    print(
-        f"  Service Data: {interpret(list(advertisement_data['ServiceData'].values())[0].hex())}"
-    )
-
+    # print(f"device address: {device.address.upper()}")
+    # print(f"\n📡 Found target device: {device.name} [{device.address}]")
+    # print(f"RSSI: {device.rssi}")
+    # print("🔍 Advertisement Data:")
+    ## print(f"  Local Name: {advertisement_data.local_name}")
+    # print(f"  Manufacturer Data: {advertisement_data['ManufacturerData']}")
+    # print(f"  Service UUIDs: {advertisement_data['UUIDs']}")
+    # print(
+    #    f"  Service Data: {interpret(list(advertisement_data['ServiceData'].values())[0].hex())}"
+    # )
+    interpret(list(advertisement_data["ServiceData"].values())[0].hex())
     # print(f"  TX Power: {advertisement_data.tx_power}")
     # print(f"  Platform Data: {advertisement_data.platform_data}")
 
@@ -96,8 +96,10 @@ async def scan_for_device():
         }
 
 
-def run_device_scan():
-    asyncio.run(scan_for_device())
+async def run_device_scan():
+    while True:
+        await scan_for_device()
+        await asyncio.sleep(3)
 
 
 #
@@ -117,7 +119,7 @@ def info():
     else:
         st.markdown(f"""Battery level: {shared_data["battery"]}🔋""")
         st.progress(shared_data["light_level"] * 10, text="Light level 💡")
-        st.progress(shared_data["position"], text="device porsition")
+        st.progress(shared_data["position"], text="device position")
         st.markdown(f"""Is moving: {True if shared_data["moving"] == 1 else False}""")
         st_autorefresh(interval=1000, limit=None, key="refresh")
         global target_mac
@@ -130,7 +132,8 @@ def info():
             target_mac = st.session_state.df.loc[
                 st.session_state.address.selection.rows[0], "address"
             ]
-        scheduler = BackgroundScheduler()
-        scheduler.add_job(run_device_scan, "interval", seconds=1)
-        scheduler.start()
+        asyncio.run(run_device_scan())
+        # scheduler = BackgroundScheduler()
+        # scheduler.add_job(run_device_scan, "interval", seconds=5)
+        # scheduler.start()
     return

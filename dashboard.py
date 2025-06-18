@@ -37,6 +37,7 @@ def hackPanel():
                        ##### Others
                        """)
         st.button("DOS", on_click=modules.dos)
+        st.button("Brick", on_click=modules.brick)
         st.button("Remove lighting rules", on_click=modules.clear)
         st.button("Silent mode", on_click=modules.silent)
         st.button("Normal mode", on_click=modules.normal)

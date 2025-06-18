@@ -61,7 +61,6 @@ def stopInfinite():
 def clear():
     loop = asyncio.get_event_loop()
     clear = bytes.fromhex("570f450303")
-    await execute(model, clear)
 
     loop.run_until_complete(execute(model, [clear]))
 

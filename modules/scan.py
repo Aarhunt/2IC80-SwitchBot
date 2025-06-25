@@ -20,7 +20,7 @@ async def discoverDevices():
     for v in devices.values():
         if 2409 in list(v[1].manufacturer_data.keys()):
             if await read_name(v[0].address) == "WoCurtain":
-                st.success("A Curtain device has been found! It is named WoCurtain")
+                st.success("A Curtain device has been found, and can be selected below! It is named WoCurtain")
                 v[0].name = "WoCurtain"
 
     return pd.DataFrame(

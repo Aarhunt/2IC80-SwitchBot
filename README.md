@@ -3,6 +3,8 @@ This is the dashboard created by group 4 for the Lab on Offensive Computer Secur
 
 Additionally, it reads the current data of the selected SwitchBot curtain and displays it live. 
 
+In the beginning, it can take quite a lot of time for the program to start. This is because it is scanning all the devices to find whether there is a SwitchBot present.
+
 ## Requirements
 Run the following command to install the required packages:
 `pip install -r requirements.txt`

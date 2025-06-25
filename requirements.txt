@@ -1,3 +1,5 @@
 streamlit
 nest_asyncio
 bleak
+streamlit_autorefresh
+apscheduler

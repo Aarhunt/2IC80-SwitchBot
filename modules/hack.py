@@ -4,29 +4,6 @@ from pandas.core.ops import logical_op
 import streamlit as st
 import random
 
-# async def main(address):
-#     device = loop.run_until_complete(BleakScanner.find_device_by_name("WoCurtain")
-#     async with BleakClient(address) as client:
-
-# gaan2 = bytes.fromhex("570f450508010202")
-# gaan3 = bytes.fromhex("570f4505040002")
-# test1 = bytes.fromhex("570f45050301")
-# wya = bytes.fromhex("570f460100")
-# test2 = bytes.fromhex("570f45050302")
-# stopcal = bytes.fromhex("570f450502")
-# crcinst = Crc8Maxim()
-# crcinst.process(close)
-# while (True):
-#     loop.run_until_complete(client.write_gatt_char(model, open)
-#     loop.run_until_complete(client.write_gatt_char(model, close)
-
-# loop.run_until_complete(client.write_gatt_char(model, start)
-# loop.run_until_complete(client.write_gatt_char(model, iets)
-# loop.run_until_complete(client.write_gatt_char(model, anders)
-# loop.run_until_complete(client.write_gatt_char(model, ltr)
-# loop.run_until_complete(client.write_gatt_char(model, gaan)
-#
-# loop.run_until_complete(client.write_gatt_char(model, stop)
 global model
 model = "cba20002-224d-11e6-9fb8-0002a5d5c51b"
 
@@ -142,73 +119,3 @@ async def executeLooped(model, toExecute):
 def hack():
     print("hi")
 
-
-# def hack(function):
-#     # address = "DA:2E:1C:E1:05:23"
-#     if (("address" not in st.session_state) or (len(st.session_state.address.selection.rows)) == 0):
-#         st.error("No object selected!")
-#         return
-#     global model
-#     model = "cba20002-224d-11e6-9fb8-0002a5d5c51b"
-#
-#     loop = asyncio.get_event_loop()
-#     try:
-#         match function:
-#             case "Clear":
-#                 loop.run_until_complete(clear())
-#             case "Open":
-#                 loop.run_until_complete(open())
-#             case "OpenTooFar":
-#                 loop.run_until_complete(openTooFar())
-#             case "Close":
-#                 loop.run_until_complete(close())
-#             case "DOS":
-#                 loop.run_until_complete(dos())
-#             case "Infinite":
-#                 loop.run_until_complete(infinite())
-#             case "stopInfinite":
-#                 loop.run_until_complete(stopInfinite())
-#             case _:
-#                 st.write("AAAAAAA")
-#     except Exception as e:
-#         print(e)
-
-# def hack(function):
-#     # address = "DA:2E:1C:E1:05:23"
-#
-#
-#     try:
-#         match function:
-#             case "Clear":
-#                 loop.run_until_complete(clear())
-#             case "Open":
-#                 loop.run_until_complete(open())
-#             case "Close":
-#                 loop.run_until_complete(close())
-#             case "DOS":
-#                 loop.run_until_complete(dos())
-#             case "Infinite":
-#                 loop.run_until_complete(infinite())
-#             case "stopInfinite":
-#                 loop.run_until_complete(stopInfinite())
-#             case "Brick":
-#                 loop.run_until_complete(brick())
-#             case "Silent":
-#                 loop.run_until_complete(silent)
-#             case _:
-#                 st.write("AAAAAAA")
-#     except Exception as e:
-#         print(e)
-#
-
-# asyncio.run(main(address))
-
-# import asyncio
-# from bleak import BleakScanner
-#
-# async def main():
-#     devices = loop.run_until_complete(BleakScanner.discover()
-#     for d in devices:
-#         print(d)
-#
-# asyncio.run(main())

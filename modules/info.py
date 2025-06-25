@@ -6,7 +6,6 @@ from streamlit_autorefresh import st_autorefresh
 from apscheduler.schedulers.background import BackgroundScheduler
 
 # Replace with your target MAC address
-TARGET_MAC = "DA:2E:1C:E1:05:23"
 target_mac = None
 
 shared_data = {
@@ -30,6 +29,7 @@ def interpret(data):
     shared_data["light_level"] = int(bytestring[32:37], 2)
 
 def detection_callback(device, advertisement_data):
+    print(advertisement_data)
     advertisement_data = advertisement_data["props"]
     interpret(list(advertisement_data["ServiceData"].values())[0].hex())
 
@@ -61,12 +61,14 @@ async def run_device_scan():
 
 
 def info():
-    if len(st.session_state.address.selection.rows) == 0:
+    if "address" not in st.session_state:
+        st.error("No object selected!")
+    elif len(st.session_state.address.selection.rows) == 0:
         st.error("No object selected!")
     else:
         st.markdown(f"""Battery level: {shared_data["battery"]}🔋""")
         st.progress(shared_data["light_level"] * 10, text="Light level 💡")
-        st.progress(shared_data["position"], text="device position")
+        st.progress(shared_data["position"], text="Device position")
         st.markdown(f"""Is moving: {True if shared_data["moving"] == 1 else False}""")
         st_autorefresh(interval=1000, limit=None, key="refresh")
         global target_mac
